@@ -1,0 +1,99 @@
+
+
+PowerShell Commands
+ winget install --id Microsoft.VisualStudioCode -e --source winget
+
+ Install Node.js (includes npm)
+  winget install --id OpenJS.NodeJS.LTS -e --source winget
+
+ Install Python (includes pip)
+  winget install --id Python.Python.3.12 -e --source winget
+
+ Install PowerShell
+  winget install --id Microsoft.PowerShell -e --source winget
+
+
+ Install the latest .NET SDK (includes runtime and tools)
+  winget install --id Microsoft.DotNet.SDK.8 -e --source winget
+
+ Install ML.NET CLI (machine learning tools for .NET)
+  winget install --id Microsoft.ML.NET.CLI -e --source winget
+
+ winget install --id Git.Git -e --source winget
+
+
+ Verify installation
+  pwsh --version
+  node -v     # should show Node.js version
+  npm -v      # should show npm version
+  python --version   # should show Python version
+  pip --version      # should show pip version
+  dotnet --version   # should show .NET SDK version
+  git --version
+  code --version
+  mlnet --version    # should show ML.NET CLI version
+
+
+ WSL
+  Install WSL
+    wsl --install
+  Install Kali Linux
+    wsl --install -d kali-linux
+  Verify Installation
+    wsl --list --online
+    Then run: wsl -d kali-linux
+  Update Kali Linux
+    sudo apt update && sudo apt upgrade -y
+
+cd C:\Users\user\Desktop\.mj
+git init
+git add .
+git commit -m "Initial commit - Favorites folder tree project"
+git remote add origin https://github.com/MJ-Ahmad/Favorites-Bar-Tree.git
+git branch -M main
+git push -u origin main
+
+
+---
+
+wsl --install -d kali-linux
+wsl --list --verbose
+wsl -d kali-linux
+
+
+sudo apt update
+sudo apt install neofetch cmatrix sl cowsay fortune -y
+
+cmatrix
+cmatrix -u 10
+sl
+hollywood
+figlet "MJ Rocks"
+toilet -f mono12 -F gay "Dance!"
+fortune | cowsay | lolcat
+yes "💃🕺 Dance Dance Dance!" | lolcat
+
+
+cmatrix &
+sl &
+fortune | cowsay | lolcat
+
+cmatrix
+figlet "Dance Party!" | lolcat
+fortune | cowsay | lolcat
+
+
+sudo apt update
+sudo apt install cmatrix sl hollywood -y
+
+
+winget install --id GitHub.cli
+winget upgrade --id GitHub.cli
+
+$ghPath = "C:\Program Files\GitHub CLI"; if (Test-Path $ghPath) { setx PATH "$env:PATH;$ghPath"; Write-Output "PATH updated. Restart PowerShell and run 'gh --version'"; } else { Write-Output "GitHub CLI not found in $ghPath. Try 'winget install --id GitHub.cli -e' again or check AppData\Local\Programs\GitHub CLI"; }
+
+
+gh auth login
+gh repo create my-repo --public
+gh repo clone <repo-name>
+gh issue list
