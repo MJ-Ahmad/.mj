@@ -1,0 +1,217 @@
+
+
+PowerShell Commands
+ winget install --id Microsoft.VisualStudioCode -e --source winget
+
+ Install Node.js (includes npm)
+  winget install --id OpenJS.NodeJS.LTS -e --source winget
+
+ Install Python (includes pip)
+  winget install --id Python.Python.3.12 -e --source winget
+
+ Install PowerShell
+  winget install --id Microsoft.PowerShell -e --source winget
+
+
+ Install the latest .NET SDK (includes runtime and tools)
+  winget install --id Microsoft.DotNet.SDK.8 -e --source winget
+
+ Install ML.NET CLI (machine learning tools for .NET)
+  winget install --id Microsoft.ML.NET.CLI -e --source winget
+
+ winget install --id Git.Git -e --source winget
+
+
+ Verify installation
+  pwsh --version
+  node -v     # should show Node.js version
+  npm -v      # should show npm version
+  python --version   # should show Python version
+  pip --version      # should show pip version
+  dotnet --version   # should show .NET SDK version
+  git --version
+  code --version
+  mlnet --version    # should show ML.NET CLI version
+
+
+ WSL
+  Install WSL
+    wsl --install
+  Install Kali Linux
+    wsl --install -d kali-linux
+  Verify Installation
+    wsl --list --online
+    Then run: wsl -d kali-linux
+  Update Kali Linux
+    sudo apt update && sudo apt upgrade -y
+
+cd C:\Users\user\Desktop\.mj
+git init
+git add .
+git commit -m "Initial commit - Favorites folder tree project"
+git remote add origin https://github.com/MJ-Ahmad/Favorites-Bar-Tree.git
+git branch -M main
+git push -u origin main
+
+
+---
+
+wsl --install -d kali-linux
+wsl --list --verbose
+wsl -d kali-linux
+
+
+sudo apt update
+sudo apt install neofetch cmatrix sl cowsay fortune -y
+
+cmatrix
+cmatrix -u 10
+sl
+hollywood
+figlet "MJ Rocks"
+toilet -f mono12 -F gay "Dance!"
+fortune | cowsay | lolcat
+yes "💃🕺 Dance Dance Dance!" | lolcat
+
+
+cmatrix &
+sl &
+fortune | cowsay | lolcat
+
+cmatrix
+figlet "Dance Party!" | lolcat
+fortune | cowsay | lolcat
+
+
+sudo apt update
+sudo apt install cmatrix sl hollywood -y
+
+
+winget install --id GitHub.cli
+winget upgrade --id GitHub.cli
+
+$ghPath = "C:\Program Files\GitHub CLI"; if (Test-Path $ghPath) { setx PATH "$env:PATH;$ghPath"; Write-Output "PATH updated. Restart PowerShell and run 'gh --version'"; } else { Write-Output "GitHub CLI not found in $ghPath. Try 'winget install --id GitHub.cli -e' again or check AppData\Local\Programs\GitHub CLI"; }
+
+
+gh auth login
+gh repo create Graphix --public
+gh repo clone <repo-name>
+gh issue list
+
+gh repo create Graphix --public --source=. --remote=origin --push
+git remote add origin https://github.com/MJ-Ahmad/.mj.git
+
+git branch -M main
+git push -u origin main
+
+---
+
+16.0 GB RAM
+Graphics Card: Intel(R) HD Graphics 530 (128 MB)
+
+
+Username:
+1774739461
+
+Password:
+Sandbox5wager2armless,
+
+Nice move, MJ — you just created a Python virtual environment with:
+
+```bash
+python -m venv .env
+```
+
+That command sets up a self‑contained environment named `.env` inside your repo. Now the next step is to **activate** it so you can install and run packages inside that sandbox without affecting your global Python setup.
+
+Here’s the step‑by‑step workflow:
+
+### 🔹 On Windows (PowerShell)
+```powershell
+.env\Scripts\Activate.ps1
+```
+
+If you’re using Command Prompt:
+```cmd
+.env\Scripts\activate.bat
+```
+
+### 🔹 On Linux / macOS (Bash/Zsh)
+```bash
+source .env/bin/activate
+```
+
+### 🔹 Confirm Activation
+Once activated, your shell prompt will change to show `(.env)` at the beginning.  
+You can check it’s working by running:
+```bash
+python --version
+pip list
+```
+
+### 🔹 Deactivate
+When you’re done, just type:
+```bash
+deactivate
+```
+
+---
+
+Since you already have a tab open searching *“python env activate”*, you’re right on track. If you’d like, I can walk you through installing packages (like `pip install requests`) inside this environment and even show you how to freeze dependencies into a `requirements.txt` for your project.  
+
+Do you want me to lay out the **full beginner‑friendly workflow** for managing packages and dependencies inside this `.env`?
+
+Perfect — your virtual environment is active (`(.env)` showing in your prompt). Now you want to **run your server**. Since you’re inside a Python project, the exact command depends on what framework or file you’re using:
+
+### 🚀 Common Server Start Commands
+
+- **Plain Python script (e.g., `server.py`)**
+  ```bash
+  python server.py
+  ```
+
+- **Flask app**
+  ```bash
+  flask run
+  ```
+  *(Make sure you set the entry point with `set FLASK_APP=app.py` on Windows PowerShell or `export FLASK_APP=app.py` on Linux/macOS.)*
+
+- **Django project**
+  ```bash
+  python manage.py runserver
+  ```
+
+- **FastAPI app**
+  ```bash
+  uvicorn main:app --reload
+  ```
+  *(Here `main` is your Python file name without `.py`, and `app` is the FastAPI instance.)*
+
+---
+
+### ✅ Next Step for You
+Since your repo already has `index.html` open in another tab, I suspect you’re building a web app. If you’ve got a backend file like `app.py` or `server.py`, just run:
+
+```bash
+python app.py
+```
+
+or
+
+```bash
+python server.py
+```
+
+That will start the server, and you’ll see something like:
+
+```
+Running on http://127.0.0.1:5000/
+```
+
+Then you can open that address in your browser to view your app.
+
+---
+
+Do you want me to help you **set up a minimal Flask server** so that your `index.html` can be served properly? That way you’ll have a working backend to match your front‑end file.
+
+

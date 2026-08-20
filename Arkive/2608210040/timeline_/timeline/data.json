@@ -1,0 +1,18 @@
+{
+  "2026-08-15": {
+    "Timeline1": [
+      { "Step": "1", "Description": "Discovery & Planning", "Status": "Completed", "EstimatedDurationDays": 7 },
+      { "Step": "2", "Description": "Design & Prototyping", "Status": "In Progress", "EstimatedDurationDays": 14 }
+    ],
+    "Timeline2": [
+      { "Step": "1", "Description": "Development", "Status": "Pending", "EstimatedDurationDays": 30 },
+      { "Step": "2", "Description": "Testing", "Status": "Pending", "EstimatedDurationDays": 10 }
+    ]
+  },
+  "2026-08-16": {
+    "Timeline1": [
+      { "Step": "1", "Description": "Deployment", "Status": "Pending", "EstimatedDurationDays": 5 },
+      { "Step": "2", "Description": "Post-Launch Support", "Status": "Pending", "EstimatedDurationDays": 20 }
+    ]
+  }
+}

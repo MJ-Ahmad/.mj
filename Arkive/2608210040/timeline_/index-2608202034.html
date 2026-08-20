@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="QuranerFariwala Recovery Timeline — responsive, accessible timeline UI" />
+  <title>QuranerFariwala Recovery Timeline</title>
+  <style>
+    :root{
+      --bg:#f4f6f9;
+      --card:#ffffff;
+      --muted:#34495e;
+      --accent:#2980b9;
+      --success:#27ae60;
+      --warning:#e67e22;
+      --danger:#e74c3c;
+      --shadow: 0 2px 6px rgba(0,0,0,0.08);
+      --radius:8px;
+      --max-width:900px;
+      --font-sans: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html,body{height:100%;}
+    body {
+      font-family: var(--font-sans);
+      background:var(--bg);
+      margin:0;
+      padding:20px;
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    h1{ text-align:center; color:#2c3e50; margin:6px 0 12px; font-size:1.6rem; }
+    .clock { text-align:center; font-size:0.95rem; color:var(--accent); margin-bottom:18px; }
+
+    .container-wrap { max-width:var(--max-width); margin:0 auto; }
+
+    .overall-progress, .timeline-card {
+      background:var(--card);
+      padding:18px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      margin:16px 0;
+    }
+
+    .progress-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .progress-info { flex:1 1 220px; min-width:180px; }
+    .progress-bar {
+      flex:2 1 360px;
+      height:28px;
+      background:#e6e9ee;
+      border-radius:999px;
+      overflow:hidden;
+      position:relative;
+      cursor:pointer;
+      outline:none;
+    }
+    .progress-fill {
+      height:100%;
+      background:var(--success);
+      color:#fff;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+      transition:width 400ms ease;
+    }
+
+    .click-hint { text-align:center; color:var(--muted); font-size:0.95rem; margin-top:10px; cursor:pointer; }
+
+    /* Timeline vertical line */
+    .timeline {
+      position:relative;
+      margin:20px 0;
+      padding:10px 0;
+    }
+    .timeline::after {
+      content:'';
+      position:absolute;
+      width:4px;
+      background-color:var(--accent);
+      top:0;
+      bottom:0;
+      left:50%;
+      transform:translateX(-50%);
+      border-radius:4px;
+    }
+
+    .step {
+      position:relative;
+      width:50%;
+      padding:12px 20px;
+      box-sizing:border-box;
+    }
+    .step.left { left:0; text-align:right; }
+    .step.right { left:50%; text-align:left; }
+
+    .step .card {
+      display:inline-block;
+      background:var(--card);
+      padding:14px;
+      border-radius:8px;
+      box-shadow:var(--shadow);
+      max-width:420px;
+      width:100%;
+    }
+
+    .step .meta { font-size:0.85rem; color:var(--accent); font-weight:700; margin-bottom:6px; }
+    .step h3 { margin:0 0 6px; font-size:1rem; color:#2c3e50; }
+    .step p { margin:0; font-size:0.95rem; color:var(--muted); }
+
+    .status { margin-top:8px; font-size:0.9rem; font-weight:600; }
+    .status.completed { color:var(--success); }
+    .status.in-progress { color:var(--warning); }
+    .status.pending { color:var(--danger); }
+
+    /* Timeline connector dot */
+    .dot {
+      position:absolute;
+      top:20px;
+      left:50%;
+      transform:translateX(-50%);
+      width:14px;
+      height:14px;
+      background:var(--card);
+      border:4px solid var(--accent);
+      border-radius:50%;
+      box-shadow:var(--shadow);
+    }
+
+    /* Responsive */
+    @media (max-width:880px){
+      .step, .step.left, .step.right { width:100%; left:0; text-align:left; padding-left:60px; padding-right:20px; }
+      .timeline::after { left:28px; }
+      .dot { left:28px; transform:translateX(0); }
+      .progress-bar { flex-basis:100%; }
+    }
+
+    /* Focus styles for keyboard users */
+    .progress-bar:focus { box-shadow:0 0 0 4px rgba(41,128,185,0.12); }
+    .step .card:focus { outline:2px solid rgba(41,128,185,0.12); }
+  </style>
+</head>
+<body>
+  <div class="container-wrap">
+    <h1>QuranerFariwala Recovery Timeline</h1>
+
+    <div class="clock" id="clock" aria-live="polite">🕒 Dhaka Time Loading...</div>
+
+    <div class="overall-progress" role="region" aria-labelledby="overall-heading">
+      <h2 id="overall-heading">Overall Progress</h2>
+
+      <div class="progress-row" id="progress-row">
+        <div class="progress-info" id="overall-status" aria-live="polite">
+          <!-- Filled by script -->
+        </div>
+
+        <div
+          class="progress-bar"
+          id="overall-bar"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          tabindex="0"
+          title="Click or press Enter to open detailed timeline"
+        >
+          <div id="overall-fill" class="progress-fill">0%</div>
+        </div>
+      </div>
+
+      <div class="click-hint" id="open-timeline">📌 বিস্তারিত তথ্য দেখতে এখানে ক্লিক করুন</div>
+    </div>
+
+    <div id="timeline" class="timeline" aria-hidden="true"></div>
+  </div>
+
+  <script>
+    // Clock using Intl with ISO 8601 output for Dhaka
+    (function(){
+      const clockEl = document.getElementById('clock');
+
+      function formatDhakaISO(date){
+        const fmt = new Intl.DateTimeFormat('en-GB', {
+          timeZone: 'Asia/Dhaka',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+        const parts = fmt.formatToParts(date);
+        const map = {};
+        parts.forEach(p => map[p.type] = p.value);
+        return `${map.year}-${map.month}-${map.day}T${map.hour}:${map.minute}:${map.second}+06:00`;
+      }
+
+      function tick(){
+        clockEl.textContent = "🕒 Dhaka Time: " + formatDhakaISO(new Date());
+        // schedule next update at next full second for accuracy
+        const now = Date.now();
+        const delay = 1000 - (now % 1000);
+        setTimeout(tick, delay);
+      }
+      tick();
+    })();
+
+    // Utility to create element with classes
+    function el(tag, cls){ const e = document.createElement(tag); if(cls) e.className = cls; return e; }
+
+    // Open timeline handlers
+    const openTimelineBtn = document.getElementById('open-timeline');
+    const overallBar = document.getElementById('overall-bar');
+    function showTimeline(){
+      const t = document.getElementById('timeline');
+      t.style.display = 'block';
+      t.setAttribute('aria-hidden','false');
+      // move focus to first timeline item when opened
+      const firstCard = t.querySelector('.card');
+      if(firstCard) firstCard.focus();
+    }
+    openTimelineBtn.addEventListener('click', showTimeline);
+    overallBar.addEventListener('click', showTimeline);
+    overallBar.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showTimeline(); }
+    });
+
+    // Fetch timeline JSON with robust error handling and fallback UI
+    fetch('timeline-2608202036.json', {cache: "no-store"})
+      .then(response => {
+        if(!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(data => renderTimeline(data))
+      .catch(err => {
+        console.error('Failed to load timeline.json', err);
+        const status = document.getElementById('overall-status');
+        status.textContent = '⚠️ Timeline data could not be loaded. অনুগ্রহ করে পরে আবার চেষ্টা করুন।';
+        const fill = document.getElementById('overall-fill');
+        fill.style.width = '0%';
+        fill.textContent = '0%';
+      });
+
+    // Render timeline and overall progress
+    function renderTimeline(data){
+      if(!data || !Array.isArray(data.Timeline)){
+        throw new Error('Invalid timeline schema');
+      }
+
+      const timelineEl = document.getElementById('timeline');
+      timelineEl.innerHTML = ''; // reset
+
+      const steps = data.Timeline;
+      const total = steps.length;
+      const completed = steps.filter(s => String(s.Status).toLowerCase() === 'completed').length;
+      const inProgress = steps.filter(s => String(s.Status).toLowerCase() === 'in progress').length;
+      const pending = steps.filter(s => String(s.Status).toLowerCase() === 'pending').length;
+
+      const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+      const statusEl = document.getElementById('overall-status');
+      statusEl.textContent = `✅ Completed: ${completed} | 🔄 In Progress: ${inProgress} | ⏳ Pending: ${pending}`;
+
+      const overallFill = document.getElementById('overall-fill');
+      overallFill.style.width = percent + '%';
+      overallFill.textContent = percent + '%';
+      overallFill.setAttribute('aria-hidden','true');
+      document.getElementById('overall-bar').setAttribute('aria-valuenow', String(percent));
+
+      // Build timeline items
+      let side = 'left';
+      steps.forEach((step, idx) => {
+        const stepWrap = el('div', 'step ' + (side === 'left' ? 'left' : 'right'));
+        side = (side === 'left') ? 'right' : 'left';
+
+        const dot = el('div', 'dot');
+        stepWrap.appendChild(dot);
+
+        const card = el('div', 'card');
+        card.setAttribute('tabindex','0');
+
+        const meta = el('div', 'meta');
+        meta.textContent = `Step ${step.Step} • ${step.Role ? step.Role : 'Role not set'}`;
+        card.appendChild(meta);
+
+        const title = el('h3');
+        title.textContent = step.Description || 'Untitled step';
+        card.appendChild(title);
+
+        const desc = el('p');
+        desc.textContent = step.Notes ? step.Notes : (step.Description ? '' : 'No description provided.');
+        card.appendChild(desc);
+
+        // Dates and assignee
+        const info = el('p');
+        info.style.marginTop = '8px';
+        info.style.fontSize = '0.9rem';
+        info.style.color = '#6b7280';
+        const start = step.StartDate ? `Start: ${step.StartDate}` : '';
+        const end = step.EndDate ? `End: ${step.EndDate}` : '';
+        const assignee = step.Assignee ? `Assignee: ${step.Assignee}` : '';
+        info.textContent = [start, end, assignee].filter(Boolean).join(' | ');
+        if(info.textContent) card.appendChild(info);
+
+        // Status badge
+        const status = el('div', 'status');
+        const st = String(step.Status || '').toLowerCase();
+        if(st === 'completed') { status.classList.add('completed'); status.textContent = 'Completed'; }
+        else if(st === 'in progress' || st === 'in-progress') { status.classList.add('in-progress'); status.textContent = 'In Progress'; }
+        else { status.classList.add('pending'); status.textContent = 'Pending'; }
+        card.appendChild(status);
+
+        // Trigger info (role-based)
+        if(step.Trigger){
+          const trigger = el('p');
+          trigger.style.marginTop = '8px';
+          trigger.style.fontSize = '0.9rem';
+          trigger.style.color = '#374151';
+          trigger.textContent = `Trigger: ${step.Trigger}`;
+          card.appendChild(trigger);
+        }
+
+        stepWrap.appendChild(card);
+        timelineEl.appendChild(stepWrap);
+      });
+    }
+  </script>
+  <!-- Add this inside <script> in timeline/index.html after renderTimeline(data) -->
+<script>
+  // Dispatch a role-based trigger event for a single step
+  function dispatchRoleTrigger(step){
+    const payload = {
+      id: step.Id || `step-${step.Step}`,
+      step: step.Step,
+      role: step.Role || null,
+      trigger: step.Trigger || null,
+      status: step.Status || null,
+      assignee: step.Assignee || null,
+      meta: {
+        emittedAt: new Date().toISOString()
+      }
+    };
+    const ev = new CustomEvent('role-trigger', { detail: payload, bubbles: true, composed: true });
+    document.dispatchEvent(ev);
+    console.debug('Dispatched role-trigger', payload);
+  }
+
+  // Dispatch triggers for all steps (call after render)
+  function dispatchAllRoleTriggers(steps){
+    steps.forEach(s => {
+      // Only dispatch when a trigger is defined
+      if(s.Trigger) dispatchRoleTrigger(s);
+    });
+  }
+
+  // Example listener for a specific role
+  document.addEventListener('role-trigger', (e) => {
+    const d = e.detail;
+    if(!d || !d.role) return;
+    // Example: DevelopmentTeam reacts to DesignSignOff
+    if(d.role === 'DevelopmentTeam' && d.trigger === 'DesignSignOff' && d.status.toLowerCase() === 'pending'){
+      // perform local action: show notification, enable dev pipeline, etc.
+      console.info('DevelopmentTeam trigger received', d);
+      // Example: emit a more specific event
+      document.dispatchEvent(new CustomEvent('trigger:CodeCommit', { detail: { stepId: d.id, reason: d.trigger } }));
+    }
+  });
+
+  // Hook into renderTimeline to dispatch after building UI
+  // Call dispatchAllRoleTriggers(data.Timeline) at the end of renderTimeline(data)
+</script>
+
+</body>
+</html>

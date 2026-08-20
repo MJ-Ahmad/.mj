@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QuranerFariwala Recovery Timelines</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f9; margin:0; }
+    header, footer { background:#2c3e50; color:white; padding:12px 20px; text-align:center; }
+    nav { background:#34495e; padding:10px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+    nav a { color:white; text-decoration:none; padding:4px 8px; border-radius:4px; }
+    nav a:hover { background:#2c3e50; }
+
+    .container { max-width:1000px; margin:20px auto; padding:20px; background:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h1 { text-align:center; color:#2c3e50; }
+    .clock { text-align:center; font-size:16px; color:#2980b9; margin-bottom:20px; }
+
+    .timeline { margin:20px 0; }
+    .timeline h2 { color:#2c3e50; margin-bottom:10px; }
+    .step { padding:10px; border-left:4px solid #2980b9; margin:10px 0; }
+    .step.completed { border-color:green; }
+    .step.in-progress { border-color:orange; }
+    .step.pending { border-color:red; }
+    .status { font-weight:bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>📖 QuranerFariwala Recovery Center</h2>
+  </header>
+
+  <nav id="nav"></nav>
+
+  <div class="container">
+    <h1>Recovery Timelines</h1>
+    <div class="clock" id="clock">🕒 Dhaka Time Loading...</div>
+    <div id="timelines"></div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 QuranerFariwala | MJSovereign Control Center</p>
+  </footer>
+
+  <script>
+    // Dhaka clock
+    function updateClock(){
+      const now = new Date();
+      const fmt = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Dhaka',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+      const parts = fmt.formatToParts(now); const map={}; parts.forEach(p=>map[p.type]=p.value);
+      document.getElementById("clock").textContent = "🕒 Dhaka Time: "+`${map.year}-${map.month}-${map.day}T${map.hour}:${map.minute}:${map.second}+06:00`;
+    }
+    setInterval(updateClock,1000); updateClock();
+
+    // Load JSON with menu + timelines
+    fetch("https://mj-ahmad.github.io/mj/data.json").then(r=>r.json()).then(data=>{
+      const nav=document.getElementById("nav");
+      const timelines=document.getElementById("timelines");
+
+      // Build nav menu
+      Object.keys(data).forEach(date=>{
+        const dayObj=data[date];
+        Object.keys(dayObj).forEach(tid=>{
+          const link=document.createElement("a");
+          link.href="#"+date+"-"+tid;
+          link.textContent=date+" "+tid;
+          nav.appendChild(link);
+        });
+      });
+
+      // Build timelines
+      Object.keys(data).forEach(date=>{
+        const dayObj=data[date];
+        Object.keys(dayObj).forEach(tid=>{
+          const tl=dayObj[tid];
+          const div=document.createElement("div");
+          div.className="timeline";
+          div.id=date+"-"+tid;
+          div.innerHTML=`<h2>${date} — ${tid}</h2>`;
+          tl.forEach(step=>{
+            const s=document.createElement("div");
+            s.className="step "+step.Status.toLowerCase().replace(" ","-");
+            s.innerHTML=`<div><strong>Step ${step.Step}:</strong> ${step.Description}</div>
+                          <div class="status">Status: ${step.Status}</div>
+                          <div>Days: ${step.EstimatedDurationDays||"N/A"}</div>`;
+            div.appendChild(s);
+          });
+          timelines.appendChild(div);
+        });
+      });
+    }).catch(err=>{
+      document.getElementById("timelines").innerHTML="⚠️ Timeline data could not be loaded.";
+    });
+  </script>
+</body>
+</html>

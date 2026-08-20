@@ -1,0 +1,110 @@
+{
+  "SchemaVersion": "1.1",
+  "GeneratedAt": "2026-08-20T00:00:00+06:00",
+  "Timeline": [
+    {
+      "Id": "step-1",
+      "Step": "1",
+      "Description": "Discovery & Planning",
+      "Status": "Completed",
+      "Role": "ProductOwner",
+      "Trigger": "RequirementsApproved",
+      "Assignee": "Team Lead",
+      "StartDate": "2026-07-01",
+      "EndDate": "2026-07-07",
+      "EstimatedDurationDays": 7,
+      "Notes": "Initial stakeholder interviews, scope definition, risk log created."
+    },
+    {
+      "Id": "step-2",
+      "Step": "2",
+      "Description": "Design & Prototyping",
+      "Status": "In Progress",
+      "Role": "DesignTeam",
+      "Trigger": "DiscoveryComplete",
+      "Assignee": "Lead Designer",
+      "StartDate": "2026-07-08",
+      "EndDate": "2026-07-25",
+      "EstimatedDurationDays": 18,
+      "Notes": "Wireframes and interactive prototype; accessibility review in progress."
+    },
+    {
+      "Id": "step-3",
+      "Step": "3",
+      "Description": "Development & Implementation",
+      "Status": "Pending",
+      "Role": "DevelopmentTeam",
+      "Trigger": "DesignSignOff",
+      "Assignee": "Engineering Manager",
+      "StartDate": "2026-07-26",
+      "EndDate": "2026-08-30",
+      "EstimatedDurationDays": 36,
+      "Notes": "Backend APIs, frontend integration, CI/CD pipelines."
+    },
+    {
+      "Id": "step-4",
+      "Step": "4",
+      "Description": "Testing & Quality Assurance",
+      "Status": "Pending",
+      "Role": "QA",
+      "Trigger": "FeatureComplete",
+      "Assignee": "QA Lead",
+      "StartDate": "2026-08-15",
+      "EndDate": "2026-09-05",
+      "EstimatedDurationDays": 22,
+      "Notes": "Unit tests, integration tests, accessibility and performance testing."
+    },
+    {
+      "Id": "step-5",
+      "Step": "5",
+      "Description": "Deployment & Launch",
+      "Status": "Pending",
+      "Role": "DevOps",
+      "Trigger": "QAApproved",
+      "Assignee": "DevOps Engineer",
+      "StartDate": "2026-09-06",
+      "EndDate": "2026-09-10",
+      "EstimatedDurationDays": 5,
+      "Notes": "Staged rollout, monitoring, rollback plan in place."
+    },
+    {
+      "Id": "step-6",
+      "Step": "6",
+      "Description": "Post-Launch Support & Maintenance",
+      "Status": "Pending",
+      "Role": "Support",
+      "Trigger": "ProductionLive",
+      "Assignee": "Support Lead",
+      "StartDate": "2026-09-11",
+      "EndDate": "2026-10-11",
+      "EstimatedDurationDays": 30,
+      "Notes": "Incident response, patching, user feedback triage."
+    },
+    {
+      "Id": "step-7",
+      "Step": "7",
+      "Description": "Project Review & Feedback Collection",
+      "Status": "Pending",
+      "Role": "PMO",
+      "Trigger": "PostLaunch30Days",
+      "Assignee": "Project Manager",
+      "StartDate": "2026-10-12",
+      "EndDate": "2026-10-20",
+      "EstimatedDurationDays": 9,
+      "Notes": "Retrospective, lessons learned, stakeholder survey."
+    },
+    {
+      "Id": "step-8",
+      "Step": "8",
+      "Description": "Final Documentation & Handover",
+      "Status": "Pending",
+      "Role": "Documentation",
+      "Trigger": "ReviewComplete",
+      "Assignee": "Technical Writer",
+      "StartDate": "2026-10-21",
+      "EndDate": "2026-10-31",
+      "EstimatedDurationDays": 11,
+      "Notes": "Handover package, runbooks, training materials."
+    }
+  ]
+}

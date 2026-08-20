@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QuranerFariwala Recovery Center</title>
+  <style>
+    :root{
+      --bg:#f4f6f9; --card:#fff; --nav:#0f1724; --accent:#1e90ff;
+      --muted:#374151; --radius:10px; --shadow:0 6px 18px rgba(2,6,23,0.08);
+      --max-width:1200px; --sidebar-width:260px;
+    }
+    html,body{height:100%; margin:0; font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif; background:var(--bg); color:var(--muted);}
+    header{background:#0b1220; color:#fff; padding:18px 20px; display:flex; align-items:center; gap:16px; box-shadow:var(--shadow);}
+    header img{height:48px; width:48px; object-fit:contain; border-radius:6px; background:#fff; padding:4px;}
+    header .title{font-size:1.05rem; font-weight:700;}
+    header .subtitle{font-size:0.85rem; color:#cbd5e1; margin-top:4px;}
+    header .brand {display:flex; flex-direction:column; line-height:1;}
+
+    .layout{max-width:var(--max-width); margin:20px auto; display:flex; gap:20px; padding:0 16px;}
+    nav.sidebar{width:var(--sidebar-width); background:var(--card); border-radius:var(--radius); padding:12px; box-shadow:var(--shadow); height:calc(100vh - 160px); overflow:auto; position:sticky; top:20px;}
+    nav h3{margin:6px 0 10px; font-size:0.95rem; color:var(--muted);}
+    .menu-group{margin-bottom:12px;}
+    .menu-day{font-weight:700; font-size:0.9rem; margin:8px 0; color:var(--accent);}
+    .menu-item{display:block; padding:8px 10px; border-radius:6px; color:#0b1220; text-decoration:none; margin:4px 0; cursor:pointer;}
+    .menu-item:hover, .menu-item.active{background:#eef6ff;}
+
+    main.content{flex:1; min-height:60vh;}
+    .hero{background:var(--card); padding:18px; border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:16px;}
+    .hero .system-sub{font-size:0.95rem; color:#0b1220; font-weight:700;}
+    .hero .system-quote{margin-top:8px; color:#475569; font-style:italic;}
+    .hero .slogan{margin-top:10px; color:#334155; font-weight:600;}
+
+    .controls{display:flex; gap:12px; margin:12px 0 18px; align-items:center; flex-wrap:wrap;}
+    .controls select, .controls input{padding:8px 10px; border-radius:8px; border:1px solid #e6e9ee; background:#fff;}
+
+    .timeline-card{background:var(--card); padding:14px; border-radius:10px; box-shadow:var(--shadow); margin-bottom:14px;}
+    .timeline-card h2{margin:0 0 8px; font-size:1rem; color:#0b1220;}
+    .step{padding:10px; border-left:4px solid var(--accent); margin:8px 0; border-radius:6px; background:#fbfdff;}
+    .step.completed{border-color:green;}
+    .step.in-progress{border-color:orange;}
+    .step.pending{border-color:#e11d48;}
+    .meta{font-size:0.85rem; color:#64748b; margin-top:6px;}
+
+    footer{margin-top:18px; padding:14px 20px; background:#0b1220; color:#cbd5e1; text-align:center; border-top:4px solid rgba(255,255,255,0.02);}
+    footer a{color:#93c5fd; text-decoration:none; margin-left:8px;}
+
+    @media (max-width:900px){
+      .layout{flex-direction:column;}
+      nav.sidebar{width:100%; height:auto; position:relative; top:auto;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="assets/logo.png" alt="Logo" id="logo">
+    <div class="brand">
+      <div class="title">The Ethical Invocation Constitution</div>
+      <div class="subtitle">A framework for principled automation and civic invocation</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Daily timelines navigation">
+      <h3>Menu</h3>
+      <div id="menu-root">
+        <!-- Menu generated from JSON -->
+      </div>
+
+      <hr style="border:none;border-top:1px solid #eef2f7;margin:12px 0;">
+      <div>
+        <h3>Views</h3>
+        <div class="menu-group">
+          <a class="menu-item" data-view="timeline" href="#" onclick="setView('timeline');return false;">Timeline</a>
+          <div style="padding-left:10px;">
+            <a class="menu-item" data-sub="project" href="#" onclick="filterType('Project-based');return false;">Project-based</a>
+            <a class="menu-item" data-sub="agenda" href="#" onclick="filterType('Agenda-based');return false;">Agenda-based</a>
+            <a class="menu-item" data-sub="task" href="#" onclick="filterType('Task-based');return false;">Task-based</a>
+            <a class="menu-item" data-sub="myday" href="#" onclick="filterType('MyDay-Based');return false;">MyDay-Based</a>
+            <a class="menu-item" data-sub="status" href="#" onclick="filterType('Status-based');return false;">Status-based</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="content" id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div id="hero-title" class="system-sub">Where every script is a verdict, every invocation a vote, and every log a legacy.</div>
+        <div class="system-quote">“Write the soul of a nation. Invoke the dignity of all beings.”</div>
+      </section>
+
+      <div class="controls" role="region" aria-label="Timeline controls">
+        <label for="dayFilter">Show day</label>
+        <select id="dayFilter" onchange="filterDay(this.value)">
+          <option value="all">All days</option>
+        </select>
+
+        <label for="search">Search</label>
+        <input id="search" placeholder="Search description or step" oninput="searchSteps(this.value)">
+      </div>
+
+      <div id="timelines-root" aria-live="polite">
+        <!-- Timelines loaded from JSON -->
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div>&copy; 2026 QuranerFariwala — All rights reserved.</div>
+    <div style="margin-top:6px;">
+      <a href="/legal/terms.html">Terms</a>
+      <a href="/legal/privacy.html">Privacy</a>
+      <a href="/legal/copyright.html">Copyright</a>
+    </div>
+  </footer>
+
+  <script>
+    // Utility
+    const qs = s => document.querySelector(s);
+    const qsa = s => Array.from(document.querySelectorAll(s));
+
+    // Load JSON data and build menu + timelines
+    async function loadData(){
+      try{
+        const res = await fetch('https://mj-ahmad.github.io/mj/data.json', {cache:'no-store'});
+        if(!res.ok) throw new Error('Network error');
+        const data = await res.json();
+        buildMenu(data);
+        buildTimelines(data);
+        populateDayFilter(Object.keys(data));
+      } catch(e){
+        document.getElementById('timelines-root').innerHTML = '<div class="timeline-card">⚠️ Timeline data could not be loaded. অনুগ্রহ করে পরে আবার চেষ্টা করুন।</div>';
+      }
+    }
+
+    // Build left menu from JSON structure
+    function buildMenu(data){
+      const root = document.getElementById('menu-root');
+      root.innerHTML = '';
+      Object.keys(data).forEach(day => {
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'menu-day';
+        dayDiv.textContent = day;
+        root.appendChild(dayDiv);
+
+        const timelines = data[day];
+        Object.keys(timelines).forEach(tid => {
+          const a = document.createElement('a');
+          a.className = 'menu-item';
+          a.href = '#'+day+'-'+tid;
+          a.textContent = tid;
+          a.onclick = (ev) => { ev.preventDefault(); scrollToTimeline(day, tid); setActiveMenu(a); };
+          root.appendChild(a);
+        });
+      });
+    }
+
+    // Scroll to timeline section
+    function scrollToTimeline(day, tid){
+      const id = encodeId(day, tid);
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function setActiveMenu(el){
+      qsa('.menu-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Build timeline cards
+    function buildTimelines(data){
+      const root = document.getElementById('timelines-root');
+      root.innerHTML = '';
+      Object.keys(data).forEach(day => {
+        const dayObj = data[day];
+        Object.keys(dayObj).forEach(tid => {
+          const id = encodeId(day, tid);
+          const card = document.createElement('div');
+          card.className = 'timeline-card';
+          card.id = id;
+          const header = document.createElement('h2');
+          header.textContent = `${day} — ${tid}`;
+          card.appendChild(header);
+
+          const steps = dayObj[tid];
+          steps.forEach(step => {
+            const s = document.createElement('div');
+            const st = (step.Status || 'Pending').toLowerCase().replace(/\s+/g,'-');
+            s.className = 'step ' + st;
+            s.innerHTML = `<div><strong>Step ${step.Step}</strong> — ${escapeHtml(step.Description || '')}</div>
+                           <div class="meta">Status: ${step.Status || 'Pending'} | Days: ${step.EstimatedDurationDays || 'N/A'} ${step.Role ? '| Role: ' + step.Role : ''}</div>`;
+            // attach data attributes for filtering/search
+            s.dataset.day = day;
+            s.dataset.tid = tid;
+            s.dataset.status = step.Status || '';
+            s.dataset.type = step.Type || '';
+            s.dataset.text = (step.Description || '') + ' ' + (step.Notes || '');
+            card.appendChild(s);
+          });
+
+          root.appendChild(card);
+        });
+      });
+    }
+
+    // Helpers
+    function encodeId(day, tid){ return day.replace(/[^a-z0-9\-]/gi,'_') + '__' + tid.replace(/[^a-z0-9\-]/gi,'_'); }
+    function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    // Day filter dropdown
+    function populateDayFilter(days){
+      const sel = qs('#dayFilter');
+      days.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        sel.appendChild(opt);
+      });
+    }
+    function filterDay(day){
+      const cards = qsa('.timeline-card');
+      cards.forEach(c => {
+        if(day === 'all') c.style.display = '';
+        else c.style.display = c.id.startsWith(day.replace(/[^a-z0-9\-]/gi,'_')) ? '' : 'none';
+      });
+    }
+
+    // Filter by Type (Project-based etc)
+    function filterType(type){
+      const steps = qsa('.step');
+      steps.forEach(s => {
+        if(!type || type === 'All') s.style.display = '';
+        else s.style.display = (s.dataset.type === type || s.dataset.type === '') ? '' : 'none';
+      });
+    }
+
+    // Search
+    function searchSteps(q){
+      const ql = q.trim().toLowerCase();
+      qsa('.step').forEach(s => {
+        const text = (s.dataset.text || '').toLowerCase();
+        s.style.display = ql === '' || text.includes(ql) ? '' : 'none';
+      });
+    }
+
+    // Initialize
+    loadData();
+
+    // Optional: dispatch role-trigger events when timeline is built
+    document.addEventListener('DOMContentLoaded', () => {
+      // After loadData completes, you may dispatch events per step if needed.
+      // Example:
+      // qsa('.step').forEach(s => {
+      //   const payload = { id: s.dataset.tid + '-' + s.dataset.day, status: s.dataset.status, emittedAt: new Date().toISOString() };
+      //   document.dispatchEvent(new CustomEvent('role-trigger', { detail: payload, bubbles:true, composed:true }));
+      // });
+    });
+  </script>
+</body>
+</html>

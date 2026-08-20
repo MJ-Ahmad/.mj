@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QuranerFariwala Recovery Timelines</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f9; margin:0; }
+    header, footer { background:#2c3e50; color:white; padding:12px 20px; text-align:center; }
+    nav { background:#34495e; padding:10px; display:flex; justify-content:center; gap:20px; }
+    nav a { color:white; text-decoration:none; font-weight:bold; }
+    nav a:hover { text-decoration:underline; }
+
+    .container { max-width:1000px; margin:20px auto; padding:20px; background:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h1 { text-align:center; color:#2c3e50; }
+    .clock { text-align:center; font-size:16px; color:#2980b9; margin-bottom:20px; }
+
+    .timeline { margin:20px 0; }
+    .timeline h2 { color:#2c3e50; margin-bottom:10px; }
+    .step { padding:10px; border-left:4px solid #2980b9; margin:10px 0; }
+    .step.completed { border-color:green; }
+    .step.in-progress { border-color:orange; }
+    .step.pending { border-color:red; }
+    .status { font-weight:bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>📖 QuranerFariwala Recovery Center</h2>
+  </header>
+
+  <nav>
+    <a href="#timeline1">Timeline 1</a>
+    <a href="#timeline2">Timeline 2</a>
+    <a href="#timeline3">Timeline 3</a>
+  </nav>
+
+  <div class="container">
+    <h1>Recovery Timelines</h1>
+    <div class="clock" id="clock">🕒 Dhaka Time Loading...</div>
+
+    <!-- Timeline placeholders -->
+    <div id="timeline1" class="timeline"></div>
+    <div id="timeline2" class="timeline"></div>
+    <div id="timeline3" class="timeline"></div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 QuranerFariwala | MJSovereign Control Center</p>
+  </footer>
+
+  <script>
+    // Dhaka clock
+    function updateClock(){
+      const now = new Date();
+      const fmt = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Dhaka',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+      const parts = fmt.formatToParts(now); const map={}; parts.forEach(p=>map[p.type]=p.value);
+      document.getElementById("clock").textContent = "🕒 Dhaka Time: "+`${map.year}-${map.month}-${map.day}T${map.hour}:${map.minute}:${map.second}+06:00`;
+    }
+    setInterval(updateClock,1000); updateClock();
+
+    // Load multiple timelines by IDs
+    function loadTimeline(jsonUrl, targetId){
+      fetch(jsonUrl).then(r=>r.json()).then(data=>{
+        const el=document.getElementById(targetId);
+        el.innerHTML=`<h2>${data.Title}</h2>`;
+        data.Timeline.forEach(step=>{
+          const div=document.createElement("div");
+          div.className="step "+step.Status.toLowerCase().replace(" ","-");
+          div.innerHTML=`<div><strong>Step ${step.Step}:</strong> ${step.Description}</div>
+                         <div class="status">Status: ${step.Status}</div>
+                         <div>Days: ${step.EstimatedDurationDays||"N/A"}</div>`;
+          el.appendChild(div);
+        });
+      }).catch(err=>{
+        document.getElementById(targetId).innerHTML="⚠️ Timeline data could not be loaded.";
+      });
+    }
+
+    // Example: load three different JSON timelines
+    loadTimeline("https://mj-ahmad.github.io/qf/timeline/timeline.json","timeline1");
+    loadTimeline("timeline2.json","timeline2");
+    loadTimeline("timeline3.json","timeline3");
+  </script>
+</body>
+</html>

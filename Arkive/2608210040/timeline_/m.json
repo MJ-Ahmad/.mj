@@ -1,0 +1,128 @@
+{
+  "MJAhmad": {
+    "Timeline": {
+      "Projects": [
+        {
+          "Id": "01",
+          "Key": "QuranerFariwala",
+          "Name": "Quraner Fariwala",
+          "Version": "1.0",
+          "CreatedDate": "2026-02-27",
+          "Description": "Comprehensive, task-level timeline for recovery, documentation, negotiation, fundraising, operations, MCP network, consolidation, and sustainability.",
+          "Phases": [
+            {
+              "Step": "1",
+              "Title": "Crisis Documentation",
+              "Goal": "Complete all lists within 3 days.",
+              "Tasks": [
+                {
+                  "TaskID": "1.1",
+                  "Section": "Creditors & Investors",
+                  "Description": "Collect names, phone numbers, amounts, and dates of all creditors and investors.",
+                  "Status": "Completed"
+                },
+                {
+                  "TaskID": "1.5",
+                  "Section": "Advance Orders",
+                  "Description": "Collect names, phone numbers, amounts, invoice references, and order details for all advance payments.",
+                  "Status": "Pending"
+                }
+              ]
+            },
+            {
+              "Step": "2",
+              "Title": "Communication & Apology",
+              "Goal": "Complete all communications within 5 days.",
+              "Tasks": [
+                {
+                  "TaskID": "2.1",
+                  "Section": "Drafting",
+                  "Description": "Prepare a formal apology letter template in Bengali and English.",
+                  "Status": "Pending"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "02",
+          "Key": "HelpingHand",
+          "Name": "Helping Hand",
+          "Version": "1.0",
+          "CreatedDate": "2026-03-15",
+          "Description": "Community-driven donation and volunteer coordination platform.",
+          "Phases": [
+            {
+              "Step": "1",
+              "Title": "Volunteer Recruitment",
+              "Goal": "Onboard 50 volunteers within 2 weeks.",
+              "Tasks": [
+                {
+                  "TaskID": "1.1",
+                  "Section": "Outreach",
+                  "Description": "Publish recruitment posts on social media and local community boards.",
+                  "Status": "Pending"
+                },
+                {
+                  "TaskID": "1.2",
+                  "Section": "Screening",
+                  "Description": "Interview and verify volunteer backgrounds.",
+                  "Status": "Pending"
+                }
+              ]
+            },
+            {
+              "Step": "2",
+              "Title": "Donation Drive",
+              "Goal": "Raise $10,000 in the first month.",
+              "Tasks": [
+                {
+                  "TaskID": "2.1",
+                  "Section": "Fundraising",
+                  "Description": "Launch online crowdfunding campaign.",
+                  "Status": "Pending"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "03",
+          "Key": "TechRecycle",
+          "Name": "Tech Recycle",
+          "Version": "1.0",
+          "CreatedDate": "2026-04-10",
+          "Description": "Hardware recycling and custom laptop manufacturing workflow.",
+          "Phases": [
+            {
+              "Step": "1",
+              "Title": "Collection",
+              "Goal": "Gather 100 old laptops within 1 month.",
+              "Tasks": [
+                {
+                  "TaskID": "1.1",
+                  "Section": "Community Outreach",
+                  "Description": "Contact schools and offices for unused hardware donations.",
+                  "Status": "Pending"
+                }
+              ]
+            },
+            {
+              "Step": "2",
+              "Title": "Refurbishment",
+              "Goal": "Refurbish 50 laptops within 2 months.",
+              "Tasks": [
+                {
+                  "TaskID": "2.1",
+                  "Section": "Technical",
+                  "Description": "Install Linux-based OS and test hardware functionality.",
+                  "Status": "Pending"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

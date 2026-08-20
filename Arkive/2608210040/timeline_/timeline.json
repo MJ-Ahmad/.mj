@@ -1,0 +1,12 @@
+{
+  "Timeline": [
+    { "Step": "1", "Description": "Discovery & Planning", "Status": "Completed" },
+    { "Step": "2", "Description": "Design & Prototyping", "Status": "In Progress" },
+    { "Step": "3", "Description": "Development & Implementation", "Status": "Pending" },
+    { "Step": "4", "Description": "Testing & Quality Assurance", "Status": "Pending" },
+    { "Step": "5", "Description": "Deployment & Launch", "Status": "Pending" },
+    { "Step": "6", "Description": "Post-Launch Support & Maintenance", "Status": "Pending" },
+    { "Step": "7", "Description": "Project Review & Feedback Collection", "Status": "Pending" },
+    { "Step": "8", "Description": "Final Documentation & Handover", "Status": "Pending" }
+  ]
+}

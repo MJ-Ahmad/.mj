@@ -1,0 +1,8 @@
+{
+  "Title": "Timeline 1 - Initial Recovery",
+  "Timeline": [
+    { "Step": "1", "Description": "Discovery & Planning", "Status": "Completed", "EstimatedDurationDays": 7 },
+    { "Step": "2", "Description": "Design & Prototyping", "Status": "In Progress", "EstimatedDurationDays": 14 },
+    { "Step": "3", "Description": "Development", "Status": "Pending", "EstimatedDurationDays": 30 }
+  ]
+}

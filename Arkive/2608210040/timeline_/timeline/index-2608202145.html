@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Ethical Invocation Constitution</title>
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; background:#f4f6f9; }
+    header { background:#2c3e50; color:white; padding:12px 20px; display:flex; align-items:center; }
+    header img { height:40px; margin-right:12px; }
+    header h1 { margin:0; font-size:1.4rem; }
+
+    .subtitle { text-align:center; font-style:italic; margin:12px; color:#34495e; }
+    .slogan { text-align:center; font-weight:bold; margin:12px; color:#2980b9; }
+
+    .layout { display:flex; }
+    nav { width:220px; background:#ecf0f1; padding:12px; }
+    nav h2 { font-size:1rem; margin:0 0 8px; color:#2c3e50; }
+    nav ul { list-style:none; padding:0; }
+    nav li { margin:6px 0; cursor:pointer; }
+    nav li:hover { text-decoration:underline; }
+
+    main { flex:1; padding:20px; }
+    .timeline { margin-bottom:20px; background:white; padding:12px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    .timeline h3 { margin-top:0; }
+    .step { padding:6px; border-left:4px solid #2980b9; margin:8px 0; }
+    .step.completed { border-color:green; }
+    .step.in-progress { border-color:orange; }
+    .step.pending { border-color:red; }
+
+    footer { background:#2c3e50; color:white; text-align:center; padding:12px; margin-top:20px; }
+    footer a { color:#ecf0f1; margin:0 8px; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="assets/logo.png" alt="Logo" />
+    <h1>The Ethical Invocation Constitution</h1>
+  </header>
+
+  <div class="subtitle">“Where every script is a verdict, every invocation a vote, and every log a legacy.”</div>
+  <div class="slogan">“Write the soul of a nation. Invoke the dignity of all beings.”</div>
+
+  <div class="layout">
+    <nav>
+      <h2>Menu</h2>
+      <ul id="menu"></ul>
+    </nav>
+    <main id="content">
+      <h2>Welcome</h2>
+      <p>Select a menu item to view timelines.</p>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 QuranerFariwala | MJSovereign Control Center</p>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Legal</a>
+  </footer>
+
+  <script>
+    // Load menu + timelines from JSON
+    fetch("https://mj-ahmad.github.io/mj/data.json").then(r=>r.json()).then(data=>{
+      const menu=document.getElementById("menu");
+      const content=document.getElementById("content");
+
+      Object.keys(data).forEach(date=>{
+        const dateItem=document.createElement("li");
+        dateItem.textContent=date;
+        const subList=document.createElement("ul");
+        Object.keys(data[date]).forEach(tid=>{
+          const subItem=document.createElement("li");
+          subItem.textContent=tid;
+          subItem.onclick=()=>{
+            renderTimeline(date,tid,data[date][tid]);
+          };
+          subList.appendChild(subItem);
+        });
+        dateItem.appendChild(subList);
+        menu.appendChild(dateItem);
+      });
+
+      function renderTimeline(date,tid,steps){
+        content.innerHTML="";
+        const div=document.createElement("div");
+        div.className="timeline";
+        div.innerHTML=`<h3>${date} — ${tid}</h3>`;
+        steps.forEach(step=>{
+          const s=document.createElement("div");
+          s.className="step "+step.Status.toLowerCase().replace(" ","-");
+          s.innerHTML=`<strong>Step ${step.Step}:</strong> ${step.Description} <br/>
+                       Status: ${step.Status} | Days: ${step.EstimatedDurationDays||"N/A"}`;
+          div.appendChild(s);
+        });
+        content.appendChild(div);
+      }
+    }).catch(err=>{
+      document.getElementById("content").innerHTML="⚠️ Failed to load data.json";
+    });
+  </script>
+</body>
+</html>

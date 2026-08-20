@@ -1,0 +1,66 @@
+{
+  "2026-08-15": {
+    "Timeline1": [
+      {
+        "Step": "1",
+        "Description": "Discovery & Planning",
+        "Status": "Completed",
+        "EstimatedDurationDays": 7,
+        "Role": "ProductOwner",
+        "Type": "Project-based",
+        "Notes": "Stakeholder interviews and scope definition."
+      },
+      {
+        "Step": "2",
+        "Description": "Design & Prototyping",
+        "Status": "In Progress",
+        "EstimatedDurationDays": 14,
+        "Role": "DesignTeam",
+        "Type": "Project-based",
+        "Notes": "Wireframes and accessibility review."
+      }
+    ],
+    "Timeline2": [
+      {
+        "Step": "1",
+        "Description": "Development Sprint 1",
+        "Status": "Pending",
+        "EstimatedDurationDays": 10,
+        "Role": "DevelopmentTeam",
+        "Type": "Task-based",
+        "Notes": "Backend APIs and CI setup."
+      },
+      {
+        "Step": "2",
+        "Description": "QA Smoke Tests",
+        "Status": "Pending",
+        "EstimatedDurationDays": 3,
+        "Role": "QA",
+        "Type": "Agenda-based",
+        "Notes": "Initial smoke and regression checks."
+      }
+    ]
+  },
+  "2026-08-16": {
+    "Timeline1": [
+      {
+        "Step": "1",
+        "Description": "Deployment to Staging",
+        "Status": "Pending",
+        "EstimatedDurationDays": 2,
+        "Role": "DevOps",
+        "Type": "MyDay-Based",
+        "Notes": "Staged rollout and monitoring."
+      },
+      {
+        "Step": "2",
+        "Description": "Support Handover",
+        "Status": "Pending",
+        "EstimatedDurationDays": 5,
+        "Role": "Support",
+        "Type": "Status-based",
+        "Notes": "Handover runbooks and on-call schedule."
+      }
+    ]
+  }
+}
